@@ -1,4 +1,3 @@
-
 {% extends 'base.html' %}
 
 {% block title %}
@@ -12,80 +11,78 @@ Product Page
 <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
+<div class="container-fluid"> <!-- Changed to container-fluid -->
+    <!-- Category List -->
+    <h2>Categories</h2>
+    <div class="row">
+        {% for category in categories %}
+            <div class="col-md-4">
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <i class="fas fa-shopping-cart"></i> {{ category.name }}
+                        <h5 class="card-title"></h5>
+                        <br>
+                        <a href="{% url 'category_products' category.id %}" class="btn btn-primary">View Products</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 
-</head>
-<body>
-<div class="container">
-      <!-- Category List -->
-      <h2>Categories</h2>
-      <div class="row">
-          {% for category in categories %}
-              <div class="col-md-4">
-                  <div class="card custom-card">
-                      <div class="card-body">
-                        <i class="fas fa-shopping-cart"></i>  {{ category.name }}
-                          <h5 class="card-title"></h5>
-                          <br>
-                          <a href="{% url 'category_products' category.id %}" class="btn btn-primary">View Products</a>
-                      </div>
-                  </div>
-              </div>
-          {% endfor %}
-      </div>
+    <br>
 
-      <br>
-      
-
-      <!-- Offer Bar -->
-      <div class="offer-bar ">
+    <!-- Offer Bar -->
+    <div class="offer-bar">
         <span class="gift-icon">🎁</span>
         <div class="offer-text">
-          Welcome to Aswin's shopping world Get 30% off on your first order! 🎉
+            Welcome to Aswin's shopping world! Get 30% off on your first order! 🎉
         </div>
-      </div>
+    </div>
 
-      <br>
+    <br>
 
-      <!-- Products List -->
-      <h2>Products</h2>
-      <div class="row">
-          {% for product in products %}
-              <div class="col-md-3 mb-4">  <!-- Adjust column width for better fit -->
-                  <div class="card h-100 custom-card">
-                      <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; padding-top:10px ">
-                      <div class="card-body">
-                          <h5 class="card-title">{{ product.name }}</h5>
-                          <p class="card-text">₹{{ product.price }}</p>
-                          <a href="{% url 'product_details' product.id %}" class="btn btn-primary">View Product</a>
-                      </div>
-                  </div>
-              </div>
-              {% endfor %}
-      </div>
+    <!-- Products List -->
+    <h2>Products</h2>
+    <div class="row">
+        {% for product in products %}
+            <div class="col-md-3 mb-4"> <!-- Adjust column width for better fit -->
+                <div class="card h-100 custom-card">
+                    <img src="{{ product.image.url }}" class="card-img-top" alt="{{ product.name }}" style="height: 200px; padding-top:10px">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ product.name }}</h5>
+                        <p class="card-text">₹{{ product.price }}</p>
+                        <a href="{% url 'product_details' product.id %}" class="btn btn-primary">View Product</a>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    </div>
 </div>
 
- 
-
- <div id="carouselExample" class="carousel slide">
+<!-- !-- carsoule -->
+<!-- Add a custom class to the carousel -->
+<div id="carouselExample" class="carousel slide custom-carousel" data-bs-ride="carousel" data-bs-interval="3000">
     <div class="carousel-inner">
-        {% for product in products %}
+      {% for product in products %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            <img 
-                src="{{ product.image.url }}" 
-                class="d-block w-100" 
-                class="carousel-image"
-                alt="Product Image">
+          <img src="{{ product.image.url }}" class="d-block w-100" alt="{{ product.name }}">
+          <div class="carousel-caption d-none d-md-block">
+            <h5>{{ product.name }}</h5>
+            <p>{{ product.description }}</p>
+            <p><strong>Rs: {{ product.price }}</strong></p>
+          </div>
         </div>
-        {% endfor %} 
-
+      {% endfor %}
+    </div>
     <button class="carousel-control-prev" type="button" data-bs-target="#carouselExample" data-bs-slide="prev">
-        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Previous</span>
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
     </button>
     <button class="carousel-control-next" type="button" data-bs-target="#carouselExample" data-bs-slide="next">
-        <span class="carousel-control-next-icon" aria-hidden="true"></span>
-        <span class="visually-hidden">Next</span>
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
     </button>
+</div>
 </div>
 
 </div>
@@ -94,46 +91,43 @@ Product Page
     /* Adjust carousel image dimensions */
     .carousel img {
         height: 400px; /* Increase height */
-        object-fit: fit; /* Ensure images fit properly */
-        padding: 0 20px; /* Add padding to the sides */
+        object-fit: cover; /* Ensure images fit properly */
+
     }
 
-    /* Optional: Add padding to the carousel itself */
+    /* Remove additional padding for the carousel */
     #carouselExample {
-        padding-left: 250px;
-        padding-right: 250px;
+        margin: 0;
+        padding-left: 150px;
+        padding-right: 150px; /* Remove margins */
     }
-</style>
-    
-<style>
+
     /* Offer bar styling */
     .offer-bar {
-      background-color: #ffe0b3; /* Light orange background */
-      color: #ff6f00; /* Darker orange text */
-      font-size: 14px;
-      display: flex;
-      align-items: center;
-      padding: 10px 20px;
-      font-weight: bold;
-      border-bottom: 1px solid #ffd699;
+        background-color: #ffe0b3; /* Light orange background */
+        color: #ff6f00; /* Darker orange text */
+        font-size: 14px;
+        display: flex;
+        align-items: center;
+        padding: 10px 0; /* Removed extra side padding */
+        font-weight: bold;
+        border-bottom: 1px solid #ffd699;
     }
 
     .offer-bar .gift-icon {
-      font-size: 18px;
-      margin-right: 10px;
+        font-size: 18px;
+        margin-right: 10px;
     }
 
     .offer-bar .offer-text {
-      flex-grow: 1;
-      text-align: center;
+        flex-grow: 1;
+        text-align: center;
     }
-  </style>
+</style>
 
 <br></br>
 
-
-
-    {% endblock %}
+{% endblock %}
 
 
 
