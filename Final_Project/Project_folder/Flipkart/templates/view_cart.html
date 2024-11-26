@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Product Page - Your Cart
+{% endblock %}
+
+{% block content %}
+<br>
+<div  class="cart-container">
+    <h2 style="padding-left:15px;">Your Cart</h2>
+
+    {% if cart %}
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Product Image</th>
+                <th scope="col">Product Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Quantity</th>
+                <th scope="col">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product_id, product in cart.items %}
+            <tr>
+                <td>
+                    <!-- Correcting image reference -->
+                    <img src="{{ product.image }}" 
+                         class="img-fluid" 
+                         alt="{{ product.name }}" 
+                         style="height: 100px; object-fit: cover;padding-top:10px ">
+                </td>
+                <td>{{ product.name }}</td>
+                <td>₹ {{ product.price }}</td>
+                <td>{{ product.quantity }}</td>
+                    
+                </td>
+                <td>
+                    <a href="{% url 'remove_from_cart' product_id %}" class="btn btn-danger">Remove</a>
+                    
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table >
+    <div style="text-align: right; padding-top:10px ; margin-right:70px" class="cart-summary">
+        <h4 style="padding-bottom: 10px;">Total Amount: ₹ {{ total_price }}</h4>
+        <a href="{% url 'payment' %}" style="font-size: larger;" class="btn btn-success">Place Order</a>
+    </div>
+    {% else %}
+    <p>Your cart is empty.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+
+{% block styles %}
+<style>
+    .cart-container {
+        padding: 20px;
+        max-width: 1200px;
+        margin: 20px auto;
+        font-family: Arial, sans-serif;
+    }
+
+    h2 {
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+
+    .table {
+        width: 100%;
+        margin-bottom: 1rem;
+        background-color: transparent;
+    }
+
+    .img-fluid {
+        max-width: 100%;
+        height: auto;
+    }
+
+    .form-control {
+        width: auto;
+    }
+    .cart-summary {
+        margin-top: 20px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        border-top: 2px solid #f1f1f1;
+        padding-top: 10px;
+    }
+
+    .cart-summary h4 {
+        margin: 0;
+        font-size: 18px;
+    }
+
+    .cart-summary .btn-success {
+        font-size: 16px;
+        padding: 10px 20px;
+    }
+
+</style>
+{% endblock %}
+
+
+
+

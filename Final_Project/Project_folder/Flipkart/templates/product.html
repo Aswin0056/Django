@@ -1,0 +1,45 @@
+
+{% extends 'base.html' %}
+
+{% block title %}
+Product Page
+{% endblock %}
+
+{% block content %}
+
+   
+</head>
+<body>
+  <br>
+    <div class="container">
+        <h1>{{ product.name }}</h1>
+        <img src="{{ product.image.url }}" class="img-fluid" alt="{{ product.name }}" style="height: 200px ; padding-top:10px ; padding-bottom:10px  ">
+        <p>{{ product.description }}</p>
+        <h3>Highlights:</h3>
+        <p>{{ product.specifications }}</p>
+        <p><strong>Price:</strong> ₹{{ product.price }}</p>
+
+   <div class="d-flex align-items-center" id="rating-stars">
+  <strong>Ratings: </strong>
+  <span class="ms-2">
+    {% for i in range %}
+      {% if i < product.ratings %}
+      <i class="bi bi-star-fill" style="color: orange;"></i> 
+      {% else %}
+      <i class="bi bi-star" style="color: gray;"></i> 
+      {% endif %}
+    {% endfor %}
+  </span>
+  <span class="ms-2">({{ product.ratings }} )</span>
+</div>
+
+
+      <br>
+      <a href="{% url 'add_to_cart' product.id %}" class="btn btn-primary">Add to Cart</a>
+      <a href="{% url 'single_payment' product.id %}" class="btn btn-primary" style="background-color: orange; border-color: orange;">Buy</a>
+      
+
+    </div>
+
+
+      {% endblock %}

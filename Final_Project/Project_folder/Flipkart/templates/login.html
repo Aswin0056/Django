@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login Page</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+<div style="padding: 50px;" class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow">
+                <div class="card-header text-center bg-primary text-white">
+                    <h4>Login to Your Account</h4>
+                </div>
+                <div class="card-body">
+                    <form method="POST" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="mb-3">
+                            <label for="username" class="form-label">Username</label>
+                            <input type="text" name="username" id="username" class="form-control" placeholder="Enter your username" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="password" class="form-label">Password</label>
+                            <input type="password" name="password" id="password" class="form-control" placeholder="Enter your password" required>
+                        </div>
+                        {% if form.errors %}
+                            <div class="alert alert-danger">
+                                Invalid username or password. Please try again.
+                            </div>
+                        {% endif %}
+                        <div  class="d-grid">
+                            <button  type="submit" class="btn btn-primary">Login</button>
+                        </div>
+                    </form>
+                </div>
+                <div class="card-footer text-center">
+                    <p>Don't have an account? <a href="{% url 'signup' %}">Sign up here</a></p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
